@@ -1,0 +1,22 @@
+{
+
+  "description": "Adds a browser action icon to the toolbar. Click the button to show all tabs as links to export and import.",
+  "manifest_version": 2,
+  "author": "ImTheDude",
+  "name": "Linkify",
+  "version": "1.0",
+  "icons": {
+    "48": "icons/beasts-48.png"
+  },
+
+  "permissions": [
+    "activeTab", "tabs"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/beasts-32.png",
+    "default_title": "Linkify",
+    "default_popup": "popup/choose_beast.html"
+  }
+
+}
