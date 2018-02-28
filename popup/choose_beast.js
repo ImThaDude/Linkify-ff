@@ -23,6 +23,15 @@ function listenForClicks() {
 
       document.getElementById("myText").value = text;
 
+      CheckIfRemovedEnabled();
+
+    }
+
+    function CheckIfRemovedEnabled() {
+      if (document.getElementById("checkbox").checked) {
+        browser.tabs.query({ currentWindow: true }, CloseAllTabs);
+        document.getElementById("checkbox").checked = false;
+      }
     }
 
     function onError(error) {
@@ -52,13 +61,25 @@ function listenForClicks() {
     }
 
     function CloseAllTabs(tabs) {
-      browser.tabs.create({ url: "https://www.msn.com/spartan/dhp?locale=en-US&market=US&enableregulatorypsm=0&enablecpsm=0&ishostisolationenforced=0&targetexperience=default" });
-      for (let tab of tabs) {
-        browser.tabs.remove(tab.id);
-      }
+      //browser.tabs.create({ url: "https://www.msn.com/spartan/dhp?locale=en-US&market=US&enableregulatorypsm=0&enablecpsm=0&ishostisolationenforced=0&targetexperience=default" });
+
+      browser.tabs.query({currentWindow: true, active:true}, function(curr) {
+        for (let tab of tabs) {
+          //Current window true and active true will return the curent active window and then return an aray for the funciton.
+          if (curr[0].id != tab.id) {
+            browser.tabs.remove(tab.id);
+          }
+
+          browser.tabs.update (curr[0].id, {url: "https://www.msn.com/spartan/dhp?locale=en-US&market=US&enableregulatorypsm=0&enablecpsm=0&ishostisolationenforced=0&targetexperience=default"});
+        }
+      });
+
     }
 
     function RenderTabs() {
+
+      CheckIfRemovedEnabled();
+
       var text = document.getElementById("myText").value;
       var links = text.split("\n");
 
